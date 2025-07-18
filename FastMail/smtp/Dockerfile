@@ -1,24 +1,17 @@
-FROM ubuntu:22.04
+# Use official gcc image
+FROM gcc:latest
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
-    libssl-dev \
-    openssl \
-    netcat \
-    git \
-    curl
-
-# Add your code
+# Set working directory
 WORKDIR /app
+
+# Copy everything in this folder
 COPY . .
 
-# Compile the C server
-RUN gcc -o smtp smtp.c -lpq -lssl -lcrypto -pthread
+# Build your SMTP server
+RUN gcc -o smtp_server smtp_server.c
 
-# Expose your custom SMTP port
+# Expose the port used by your SMTP server
 EXPOSE 2526
 
-# Run the server
-CMD ["./smtp"]
+# Start the server
+CMD ["./smtp_server"]

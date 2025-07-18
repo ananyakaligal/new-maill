@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: smtp-server
+    env: docker
+    plan: free
+    repo: https://github.com/your-username/FastMail
+    dockerContext: ./smtp
